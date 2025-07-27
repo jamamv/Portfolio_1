@@ -196,10 +196,14 @@ function App() {
             Software Engineer
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
+            <a
+              href="/Jamila_Musayeva_CV.pdf"
+              download
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
+            >
               <Download className="mr-2" size={20} />
               Download Resume
-            </button>
+            </a>
             <button
               onClick={() => scrollToSection('#contact')}
               className="border border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
