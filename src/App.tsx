@@ -50,7 +50,7 @@ function App() {
     },
     {
       title: 'Technical Support Engineer',
-      company: 'Technical Support Engineer',
+      company: 'Luzmo - Saas for BI and Data Analytics',
       period: '2023 - 2024',
       description: 'Responsible for troubleshooting AWS logs, resolving front-end/back-end bugs, handling API requests via Postman/Insomnia, and managing SSO integrations. I collaborated with cross-functional teams, dashboarding data visualization, communicated with clients, and maintained technical documentation.',
       technologies: ['JSON', 'Databases', "REST API's", 'Data Analysis', 'Data Visualization', 'Embedded Software', 'AWS']
