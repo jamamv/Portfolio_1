@@ -36,8 +36,8 @@ function App() {
     { name: 'Python', level: 90 },
     { name: 'SQL', level: 85 },
     { name: 'Oracle DB', level: 88 },
-    { name: '', level: 82 },
-    { name: '', level: 78 },
+    { name: 'JavaScript', level: 82 },
+    { name: 'AWS', level: 78 },
   ];
 
   const experiences = [
@@ -239,14 +239,14 @@ function App() {
                 Recognition: Winner – Data4Good data visualization challenge (for an analytics project turning complex humanitarian data into actionable insights).
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                  <Github size={24} />
-                </a>
-                <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                <a
+                  href="https://www.linkedin.com/in/jamilamusayeva/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                  aria-label="LinkedIn"
+                >
                   <Linkedin size={24} />
-                </a>
-                <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                  <Twitter size={24} />
                 </a>
               </div>
             </div>
@@ -435,14 +435,14 @@ function App() {
               </div>
 
               <div className="flex space-x-4 mt-8">
-                <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-emerald-600 transition-colors">
-                  <Github size={24} />
-                </a>
-                <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-emerald-600 transition-colors">
+                <a
+                  href="https://www.linkedin.com/in/jamilamusayeva/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-800 p-3 rounded-lg hover:bg-emerald-600 transition-colors"
+                  aria-label="LinkedIn"
+                >
                   <Linkedin size={24} />
-                </a>
-                <a href="#" className="bg-gray-800 p-3 rounded-lg hover:bg-emerald-600 transition-colors">
-                  <Twitter size={24} />
                 </a>
               </div>
             </div>
