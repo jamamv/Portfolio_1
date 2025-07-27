@@ -66,26 +66,26 @@ function App() {
 
   const projects = [
     {
-      title: 'Master Thesis',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    title: 'Master Thesis: Multitask Bayesian-Neural Hybrid Framework for Insurance Claims',
+      description: 'Leveraged PyTorch and TensorFlow to build a Bayesian-neural hybrid framework predicting claim frequency and severity. Implemented parametric distribution layers for interpretability and achieved statistically robust performance on sparse datasets',
       image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+      technologies: ['Python', 'PyTorch', 'Bayesian Networks', 'Tensorflow'],
       github: '#',
       live: '#'
     },
     {
-      title: 'Lorem Ipsum',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      title: 'Smart Bus System Web App',
+      description: 'Led a team of four to develop a real-time monitoring/control interface (Django, Docker, MongoDB, Celery, JavaScript) for Raspberry Pi/Arduino-based bus obstacle detection and temperature sensing system. Implemented a user-friendly dashboard for data visualization and control, enhancing public transport safety and efficiency.',
       image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['Vue.js', 'Firebase', 'Socket.io', 'Tailwind'],
+      technologies: ['Python', 'Django', 'Docker', 'MongoDB', 'Celery', 'JavaScript'],
       github: '#',
       live: '#'
     },
     {
-      title: 'Lorem ipsum',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      title: 'Embedded Systems Networking Project',
+      description: 'Engineered a home-automation gateway on ESP32S3 (FreeRTOS, TCP/IP, SQL, PHP) with multi-threading, mutexes, and crash-consistency measures—ensuring reliable sensor data synchronization.',
       image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['React', 'D3.js', 'Python', 'PostgreSQL'],
+      technologies: ['C', 'FreeRTOS', 'TCP/IP', 'SQL', 'PHP'],
       github: '#',
       live: '#'
     }
@@ -224,15 +224,15 @@ function App() {
             <div>
               <h3 className="text-2xl font-bold mb-6 text-emerald-400">Professional Background</h3>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                I'm a software engineer with over 4 years of experience building high-performance systems using Java and Python.
-                My focus lies in algorithmic problem-solving, data engineering, and backend infrastructure. I enjoy working on complex
-                systems where performance, scalability, and efficiency are critical.
+                I'm a software engineer with over 2 years of experience building high-performance systems using Java and Python.
               </p>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                My expertise includes data pipelines, distributed computing, and working with large-scale datasets. I’ve worked extensively
-                with tools such as Apache Spark, Kafka, and Airflow, and I’m experienced in designing systems that support advanced data
-                analysis, machine learning workflows, and automation. Outside of work, I stay sharp by solving algorithmic challenges,
-                contributing to open-source tools, and continuously exploring advances in data architecture and cloud technologies.
+                I help with building regulated, data-intensive financial platforms. I focus on Java & Python services, ETL pipelines, and REST APIs that ingest, validate, and reconcile millions of IFRS 9 / ECB-governed records, while keeping releases fast and defects low.
+                Earlier in my career I spent time in a technical support role—translating production issues and data nuances into clear language for non-technical users and helping them debug issues. That experience still shapes how I design runbooks, alerts, and onboarding flows: I aim to reduce time-to-resolution and make complex data behavior explainable.
+                Alongside engineering I completed substantial management and operations coursework (strategic IP management, ICT service management, requirement engineering and domain modeling), which helps me structure delivery plans, define measurable KPIs, and facilitate cross-team decisions.
+                Outside my full-time roles I’m a co-founder of a second-hand retail shop in Azerbaijan, handling the tech stack, inventory analytics, and basic financial dashboards. During the war I helped co-found a volunteer initiative that raised funds and directed all proceeds to affected families—coordinating online campaigns, payment tracing, and transparent reporting.
+                I enjoy the intersection of data engineering, regulatory automation, and platform reliability—where careful schema design, validation logic, and deployment automation directly influence audit outcomes and user trust. I bring a bias for grounded metrics (latency, MTTR, defect escape %, adoption), empathetic communication from my support background, and continuous learning across distributed data patterns and emerging DevOps tooling.
+                Recognition: Winner – Data4Good data visualization challenge (for an analytics project turning complex humanitarian data into actionable insights).
               </p>
               <div className="flex space-x-4">
                 <a href="#" className="text-emerald-400 hover:text-emerald-300 transition-colors">
@@ -251,19 +251,19 @@ function App() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MapPin className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">Belgium</span>
+                  <span className="text-gray-300">USA</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">example@example.com</span>
+                  <span className="text-gray-300">musayevajama@gmail.com</span>
                 </div>
                 <div className="flex items-center">
                   <Code className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">4+ Years Experience</span>
+                  <span className="text-gray-300">2+ Years Experience</span>
                 </div>
                 <div className="flex items-center">
                   <Briefcase className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300"></span>
+                  <span className="text-gray-300">KBC Banking & Insurance</span>
                 </div>
               </div>
             </div>
@@ -418,15 +418,15 @@ function App() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <Mail className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">example@example.com</span>
+                  <span className="text-gray-300">musayevajama@gmail.com</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">your number maybe?</span>
+                  <span className="text-gray-300">+1 571 241 4561</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">Belgium, Leuven</span>
+                  <span className="text-gray-300">USA</span>
                 </div>
               </div>
 
