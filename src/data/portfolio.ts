@@ -71,7 +71,7 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    title: 'AI-First Software Engineer',
+    title: 'AI Software Engineer',
     company: 'OPENLANE',
     period: 'Aug 2026 – Present',
     highlights: [
@@ -85,7 +85,7 @@ export const experiences: Experience[] = [
   {
     title: 'AI Software Engineer (Technical Lead), GenAI & Agentic Systems',
     company: 'KBC Group',
-    period: 'Jul 2025 – Jul 2026',
+    period: 'Aug 2025 – Aug 2026',
     highlights: [
       'Technical lead for 3 production GenAI agents with €1.2M+ ($1.3M) in audited annualized benefits and access for 12,000+ employees; contributed to 7 enterprise agentic AI cases.',
       'Established evaluation and governance safeguards (LLM-as-judge, golden-question benchmarks, evaluator agents, human-in-the-loop, audit trails) aligned with the EU AI Act and DORA.',
