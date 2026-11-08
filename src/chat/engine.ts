@@ -25,7 +25,6 @@ import {
 export type Link = { label: string; href: string };
 export type Answer = { text: string; bullets?: string[]; links?: Link[] };
 
-const firstName = profile.name.split(' ')[0];
 const emailLink: Link = { label: 'Email me', href: `mailto:${profile.email}` };
 const resumeLink: Link = { label: 'Download my resume', href: profile.resume };
 const linkedinLink: Link = { label: 'LinkedIn', href: profile.linkedin };
