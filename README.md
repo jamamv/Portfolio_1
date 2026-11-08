@@ -30,9 +30,9 @@ src/components/    Navbar and shared Section layout
 src/App.tsx        page sections
 ```
 
-## Ask my portfolio (chatbot)
+## Jama, the portfolio chatbot
 
-The chat button in the bottom-right corner answers visitors' questions about my experience, skills, and projects.
+The **Ask Jama** button in the bottom-right corner answers visitors' questions about my experience, skills, and projects.
 
 - **No API key, no cost.** Answers are computed in the browser by matching the question against `src/data/portfolio.ts` (`src/chat/engine.ts`). Nothing is sent to a server.
 - **Stays up to date.** Edit `src/data/portfolio.ts` and the bot's answers change with it.

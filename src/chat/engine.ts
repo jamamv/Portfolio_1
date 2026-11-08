@@ -1,11 +1,11 @@
-// "Ask my portfolio" answer engine.
+// Answer engine for "Jama", the portfolio chatbot.
 //
 // Runs entirely in the browser: no API key, no server, no cost. It answers by
 // matching the question against the content in src/data/portfolio.ts, so the
 // bot stays accurate whenever that file changes.
 //
 // To swap in a real LLM later, replace `answerQuestion` in AskPortfolio.tsx with
-// a call to a serverless function (see README, "Ask my portfolio").
+// a call to a serverless function (see README, "Jama, the portfolio chatbot").
 
 import {
   about,
@@ -182,7 +182,7 @@ const topics: Topic[] = [
   {
     terms: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'yo'],
     answer: () => ({
-      text: `Hi! I'm ${firstName}'s portfolio assistant, and I answer in ${firstName}'s voice from what's on this site. Ask about my experience, skills, projects, education, or how to reach me.`,
+      text: `Hi, I'm Jama! Ask about my experience, skills, projects, education, or how to reach me.`,
     }),
   },
   {

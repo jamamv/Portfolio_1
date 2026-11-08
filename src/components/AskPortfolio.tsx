@@ -6,10 +6,10 @@ import { useReducedMotion } from '../hooks/useMotion';
 type Message = { id: number; from: 'user' | 'bot'; text: string; answer?: Answer };
 
 const greeting: Answer = {
-  text: "Hi! Ask me anything about my experience, skills, or projects. I answer from what's on this site.",
+  text: "Hi, I'm Jama! Ask me anything about my experience, skills, or projects. I answer from what's on this site.",
 };
 
-// Floating "Ask my portfolio" chat. Answers come from src/chat/engine.ts, which runs
+// Floating chat with "Jama", the portfolio bot. Answers come from src/chat/engine.ts, which runs
 // in the browser with no API key. To use an LLM instead, make `ask` call a
 // serverless endpoint and return the same Answer shape.
 async function ask(question: string): Promise<Answer> {
@@ -116,22 +116,22 @@ export default function AskPortfolio() {
         }`}
       >
         {open ? <X size={18} aria-hidden="true" /> : <MessageCircle size={18} className="text-accent" aria-hidden="true" />}
-        {open ? 'Close' : 'Ask my portfolio'}
+        {open ? 'Close' : 'Ask Jama'}
       </button>
 
       {open && (
         <div
           id="ask-portfolio"
           role="dialog"
-          aria-label="Ask my portfolio"
+          aria-label="Chat with Jama"
           className="chat-in fixed inset-x-4 bottom-4 z-[60] flex max-h-[min(640px,calc(100dvh-2rem))] flex-col overflow-hidden rounded-3xl border border-line/10 bg-surface/95 shadow-[0_20px_60px_rgb(0_0_0/0.6)] backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:right-6 sm:w-[400px]"
         >
           <header className="flex items-start justify-between gap-3 border-b border-line/10 px-5 py-4">
             <div>
               <p className="flex items-center gap-2 font-display text-lg text-fg">
-                <Sparkles size={16} className="text-accent" aria-hidden="true" /> Ask my portfolio
+                <Sparkles size={16} className="text-accent" aria-hidden="true" /> Jama
               </p>
-              <p className="text-xs text-muted">Answers come from this site, instantly and privately.</p>
+              <p className="text-xs text-muted">My portfolio bot. Answers come from this site, instantly and privately.</p>
             </div>
             <button type="button" onClick={close} className="rounded-full p-1.5 text-muted transition hover:bg-fg/10 hover:text-fg" aria-label="Close chat">
               <X size={18} aria-hidden="true" />
