@@ -38,7 +38,7 @@ function BotMessage({ answer, onNavigate }: { answer: Answer; onNavigate: () => 
               href={l.href}
               onClick={l.href.startsWith('#') ? onNavigate : undefined}
               {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              {...(l.href.endsWith('.pdf') ? { download: true } : {})}
+              {...(l.href.endsWith('.pdf') ? { download: l.href.split('/').pop() } : {})}
               className="rounded-full border border-accent/30 px-3 py-1 text-xs font-medium text-accent transition hover:bg-accent/10"
             >
               {l.label}
