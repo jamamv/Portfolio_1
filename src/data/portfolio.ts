@@ -106,11 +106,10 @@ export const experiences: Experience[] = [
     companyUrl: 'https://www.alignerr.com',
     period: 'Feb 2025 – Present',
     highlights: [
-      'Train and evaluate frontier LLMs with rubric-based ratings for factuality, completeness, and coherence.',
-      'Provide human-in-the-loop feedback, prompt evaluation, and data annotation for generative AI model tasks.',
-      'Hold labeled outputs to strict guidelines and reliability metrics such as benchmark consistency and minimal rework.',
+      'Evaluated frontier LLM outputs with rubric-based ratings for factuality, completeness, reasoning, and coherence, providing human feedback used to train and benchmark generative AI models.',
+      'Wrote and reviewed prompts and evaluation tasks designed to expose model failure modes, holding outputs to strict annotation guidelines for high benchmark consistency and low rework.',
     ],
-    technologies: ['LLM evaluation', 'Rubric design', 'Human-in-the-loop', 'Data annotation'],
+    technologies: ['LLM evaluation', 'Rubric design', 'Prompt design', 'Human-in-the-loop', 'Data annotation'],
   },
   {
     title: 'Software Engineer',
