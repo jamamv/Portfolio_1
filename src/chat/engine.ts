@@ -121,6 +121,13 @@ const skillAliases: Record<string, string> = {
   pytorch: 'pytorch',
   claude: 'claude code',
   codex: 'openai codex',
+  copilot: 'microsoft copilot',
+  'm365 copilot': 'microsoft copilot',
+  'ai studio': 'google ai studio',
+  'google studio': 'google ai studio',
+  bard: 'gemini',
+  gpt: 'chatgpt',
+  'chat gpt': 'chatgpt',
   'c#': '.net',
   dotnet: '.net',
   node: 'node.js',
@@ -142,7 +149,8 @@ function findSkills(q: string): SkillHit[] {
   }
   for (const [alias, key] of Object.entries(skillAliases)) {
     const hit = skillIndex.get(key);
-    if (hit && has(q, alias)) found.set(key, hit);
+    // Skip an alias that is only part of a name already matched ("copilot" in "copilot studio").
+    if (hit && has(q, alias) && ![...found.keys()].some((k) => k.includes(alias))) found.set(key, hit);
   }
   // Prefer the most specific names: drop "AWS" when "AWS Bedrock" also matched.
   const keys = [...found.keys()];
@@ -165,7 +173,8 @@ type Topic = { terms: string[]; answer: (q: string) => Answer };
 // Ways people ask about a whole skill group rather than one skill.
 const groupTerms: Record<string, string[]> = {
   'AI & Agentic Engineering': ['ai engineering', 'agentic', 'llm', 'llms', 'genai', 'generative ai', 'machine learning', 'ml'],
-  'AI Platforms & Dev Tools': ['ai platform', 'ai tools', 'llm provider', 'model provider', 'dev tools', 'coding assistant'],
+  'Enterprise AI Platforms': ['ai platform', 'ai platforms', 'enterprise ai', 'low-code', 'low code', 'no-code', 'microsoft ai', 'microsoft stack', 'power platform', 'llm provider', 'model provider'],
+  'AI-Assisted Development': ['ai tools', 'dev tools', 'coding assistant', 'ai coding', 'ai-assisted', 'ai assisted', 'vibe coding'],
   'Programming & Full-Stack': ['frontend', 'front-end', 'backend', 'back-end', 'full-stack', 'fullstack', 'full stack', 'programming language', 'coding language', 'web development'],
   'Cloud & Production': ['cloud', 'devops', 'infrastructure', 'deployment', 'observability', 'monitoring'],
   'Databases & APIs': ['database', 'databases', 'db', 'sql', 'api', 'apis', 'data storage'],
@@ -368,7 +377,9 @@ export function answerQuestion(question: string): Answer {
   // A named skill: say whether and where I've used it.
   const skills = findSkills(q);
   const asksAboutSkill = /\b(know|use|used|using|familiar|work with|worked with|proficient|comfortable|experience with|experienced in|do you do)\b/.test(q);
-  if (skills.length && (asksAboutSkill || !best)) {
+  // A skill name that is a longer phrase than the best topic term wins ("Google AI Studio" over "google").
+  const skillScore = Math.max(0, ...skills.map((s) => normalize(s.name).split(' ').length + 1));
+  if (skills.length && (asksAboutSkill || !best || skillScore > best.score)) {
     return skills.length === 1
       ? { text: `Yes. ${describeSkill(skills[0])}` }
       : { text: 'Yes, here is where those show up:', bullets: skills.map(describeSkill) };
