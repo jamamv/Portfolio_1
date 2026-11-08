@@ -9,7 +9,7 @@ import SkillCloud from './components/SkillCloud';
 import ParticleField from './components/ParticleField';
 import ErrorBoundary from './components/ErrorBoundary';
 import AskPortfolio from './components/AskPortfolio';
-import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, skillGroups, stats, universityRanking, type Project } from './data/portfolio';
+import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, recommendationsUrl, skillGroups, stats, testimonials, universityRanking, type Project } from './data/portfolio';
 import { hasWebGL, useFinePointer, useInView, useIsSmallScreen, useReducedMotion } from './hooks/useMotion';
 
 // 3D code loads after the page text, in its own chunk.
@@ -411,6 +411,36 @@ function Writing() {
   );
 }
 
+function Testimonials() {
+  return (
+    <Section id="recommendations" index="07" title="Recommendations" subtitle="What people I've worked with say.">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {testimonials.map((t, i) => (
+          <Reveal key={t.name} delay={i * 100}>
+            <figure className="glass flex h-full flex-col p-6 md:p-8">
+              <span className="mb-4 font-display text-5xl leading-none text-accent/60" aria-hidden="true">
+                “
+              </span>
+              <blockquote className="mb-8 flex-1 font-display text-xl italic leading-snug text-fg">{t.quote}</blockquote>
+              <figcaption className="border-t border-line/10 pt-5">
+                <p className="font-medium text-fg">{t.name}</p>
+                <p className="text-sm text-muted">{t.role}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.15em] text-muted/70">{t.relation}</p>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+      <Reveal className="mt-10">
+        <a href={recommendationsUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+          Read the full recommendations on LinkedIn
+          <ArrowUpRight size={18} aria-hidden="true" />
+        </a>
+      </Reveal>
+    </Section>
+  );
+}
+
 function Contact() {
   const links = [
     { href: `mailto:${profile.email}`, label: profile.email, icon: Mail },
@@ -427,7 +457,7 @@ function Contact() {
           <div className="relative rounded-[calc(2rem-1px)] bg-surface px-6 py-16 text-center md:px-16 md:py-24">
             <div className="absolute inset-0 grain opacity-60" aria-hidden="true" />
             <p className="eyebrow relative mb-5">
-              <span className="text-muted">07 /</span> Contact
+              <span className="text-muted">08 /</span> Contact
             </p>
             <h2 id="contact-title" className="relative mx-auto mb-6 max-w-3xl font-display text-4xl leading-tight md:text-6xl">
               Let's build AI that <span className="italic text-accent">ships</span>.
@@ -473,6 +503,7 @@ export default function App() {
         <Projects />
         <Background />
         <Writing />
+        <Testimonials />
         <Contact />
       </main>
       <footer className="relative z-10 border-t border-line/10 py-10">

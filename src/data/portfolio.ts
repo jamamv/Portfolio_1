@@ -293,6 +293,35 @@ export const posts: Post[] = [
   },
 ];
 
+export type Testimonial = { quote: string; name: string; role: string; relation: string };
+
+// Excerpts from LinkedIn recommendations, quoted word for word.
+export const recommendationsUrl = 'https://www.linkedin.com/in/jamilamusayeva/details/recommendations/';
+
+export const testimonials: Testimonial[] = [
+  {
+    quote:
+      'When challenges arise, you take ownership, investigate the options and involve the right people when needed. You also have a natural ability to connect with colleagues across teams, which makes collaboration easy and productive.',
+    name: 'Geert Vandezande',
+    role: 'Business Architect, Copilot Studio',
+    relation: 'Worked with Jamila on the same team',
+  },
+  {
+    quote:
+      "Jamila is extremely hard-working, eager to learn, and passionate about the work she does. … I enjoyed working with Jamila, and wholeheartedly recommend her for any position where determination, perseverance, and willingness to go beyond one's comfort zone are appreciated.",
+    name: 'Stijn Dejongh',
+    role: 'Principal Architect, Regnology',
+    relation: 'Mentored and onboarded Jamila at KBC',
+  },
+  {
+    quote:
+      "Whenever something was still done manually, she'd be the one wondering whether it could be automated. That's exactly the mindset you want on a team.",
+    name: 'Carmen Vandeloo',
+    role: 'Delivery Manager, Luzmo',
+    relation: 'Managed Jamila directly at Luzmo',
+  },
+];
+
 export type SideProject = { title: string; description: string; technologies: string[] };
 
 // University and earlier engineering projects, shown as a compact list under the featured projects.
