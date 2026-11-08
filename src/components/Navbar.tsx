@@ -63,8 +63,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#home" className="flex items-center gap-3 font-display text-lg text-fg">
-          <img src={profile.avatar} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-cover ring-1 ring-accent/50" />
+        <a href="#home" className="font-display text-lg text-fg">
           {profile.name}
         </a>
 

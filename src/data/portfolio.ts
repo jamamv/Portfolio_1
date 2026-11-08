@@ -16,9 +16,8 @@ export const profile = {
   // The PDF lives in /public under this exact name.
   resume: '/Jamila_Musayeva_CV.pdf',
   currentCompany: 'OPENLANE',
-  // Portrait and navbar avatar, both in /public. Replace the files to change the photo.
+  // Portrait in /public. Replace the file to change the photo.
   photo: '/jamila.webp',
-  avatar: '/jamila-avatar.webp',
 };
 
 // Animated counters under the hero headline.
