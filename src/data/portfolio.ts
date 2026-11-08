@@ -64,6 +64,8 @@ export const skillGroups: SkillGroup[] = [
 export type Experience = {
   title: string;
   company: string;
+  /** Official company website, opened in a new tab. */
+  companyUrl?: string;
   period: string;
   highlights: string[];
   technologies: string[];
@@ -73,6 +75,7 @@ export const experiences: Experience[] = [
   {
     title: 'AI Software Engineer',
     company: 'OPENLANE',
+    companyUrl: 'https://www.openlane.com',
     period: 'Aug 2026 – Present',
     highlights: [
       'Shipped 12+ dealer-facing features and closed 50+ tickets across React/TypeScript and .NET, partnering with Product, UX, Customer Success, and dealers from discovery through post-launch adoption.',
@@ -85,6 +88,7 @@ export const experiences: Experience[] = [
   {
     title: 'AI Software Engineer (Technical Lead), GenAI & Agentic Systems',
     company: 'KBC Group',
+    companyUrl: 'https://www.kbc.com/en',
     period: 'Aug 2025 – Aug 2026',
     highlights: [
       'Technical lead for 3 production GenAI agents with €1.2M+ ($1.3M) in audited annualized benefits and access for 12,000+ employees; contributed to 7 enterprise agentic AI cases.',
@@ -98,6 +102,7 @@ export const experiences: Experience[] = [
   {
     title: 'AI Benchmark Engineer (Freelance)',
     company: 'Alignerr',
+    companyUrl: 'https://www.alignerr.com',
     period: 'Feb 2025 – Present',
     highlights: [
       'Train and evaluate frontier LLMs with rubric-based ratings for factuality, completeness, and coherence.',
@@ -109,6 +114,7 @@ export const experiences: Experience[] = [
   {
     title: 'Software Engineer',
     company: 'KBC Group',
+    companyUrl: 'https://www.kbc.com/en',
     period: 'Sep 2024 – Jul 2025',
     highlights: [
       'Delivered 17 high-priority features ahead of ECB deadlines: REST APIs, CI/CD pipelines, and dependency-aware regression tests.',
@@ -121,6 +127,7 @@ export const experiences: Experience[] = [
   {
     title: 'Technical Support Engineer',
     company: 'Luzmo (SaaS BI Analytics)',
+    companyUrl: 'https://www.luzmo.com',
     period: 'Mar 2023 – Aug 2024',
     highlights: [
       'Resolved 200+ high-priority production incidents across data ingestion pipelines, API integrations, and customer environments.',
@@ -172,12 +179,33 @@ export const projects: Project[] = [
   },
 ];
 
-export type Education = { degree: string; school: string; period: string; detail?: string; coursework?: string[] };
+export type Education = {
+  degree: string;
+  /** KU Leuven programme page for this degree. */
+  degreeUrl?: string;
+  /** Degree type, major, and option as KU Leuven names them. */
+  subtitle?: string;
+  school: string;
+  schoolUrl?: string;
+  period: string;
+  detail?: string;
+  coursework?: string[];
+};
+
+// Shown once above the education cards. Source: Times Higher Education World University Rankings 2027 (published Oct 2026).
+export const universityRanking = {
+  text: '#45 in the world and #1 in Belgium',
+  source: 'THE World University Rankings 2027',
+  url: 'https://www.timeshighereducation.com/world-university-rankings/ku-leuven',
+};
 
 export const education: Education[] = [
   {
-    degree: 'MSc Information Management: Software Engineering',
+    degree: 'Master of Information Management',
+    degreeUrl: 'https://onderwijsaanbod.kuleuven.be/opleidingen/e/CQ_50822897.htm',
+    subtitle: 'Master of Science',
     school: 'KU Leuven',
+    schoolUrl: 'https://www.kuleuven.be/english/',
     period: 'Sep 2024 – Jun 2025 · Cum Laude',
     detail: 'Thesis: multi-task deep learning to predict insurance claim frequency and severity.',
     coursework: [
@@ -193,8 +221,11 @@ export const education: Education[] = [
     ],
   },
   {
-    degree: 'BEng Technology: Software Engineering, ICT & Smart Electronics',
-    school: 'KU Leuven, Group T Campus',
+    degree: 'Bachelor of Engineering Technology',
+    degreeUrl: 'https://onderwijsaanbod.kuleuven.be/opleidingen/e/SC_55554488.htm',
+    subtitle: 'Electronics and ICT Engineering: Smart Electronics and Software',
+    school: 'KU Leuven, Group T Leuven Campus',
+    schoolUrl: 'https://www.kuleuven.be/english/',
     period: 'Sep 2020 – Jun 2024',
     coursework: [
       'Software Engineering',

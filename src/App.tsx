@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowDown, ArrowUpRight, Award, Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
@@ -9,7 +9,7 @@ import SkillCloud from './components/SkillCloud';
 import ParticleField from './components/ParticleField';
 import ErrorBoundary from './components/ErrorBoundary';
 import AskPortfolio from './components/AskPortfolio';
-import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, skillGroups, stats, type Project } from './data/portfolio';
+import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, skillGroups, stats, universityRanking, type Project } from './data/portfolio';
 import { hasWebGL, useFinePointer, useInView, useIsSmallScreen, useReducedMotion } from './hooks/useMotion';
 
 // 3D code loads after the page text, in its own chunk.
@@ -205,7 +205,9 @@ function Experience() {
               <div className="mb-5 flex flex-col justify-between gap-2 md:flex-row md:items-baseline">
                 <div>
                   <h3 className="font-display text-2xl text-fg">{exp.title}</h3>
-                  <p className="font-medium text-accent">{exp.company}</p>
+                  <p className="font-medium text-accent">
+                    <MaybeLink href={exp.companyUrl}>{exp.company}</MaybeLink>
+                  </p>
                 </div>
                 <p className="shrink-0 text-sm text-muted">{exp.period}</p>
               </div>
@@ -319,10 +321,22 @@ function Background() {
           <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-muted">
             <GraduationCap size={18} className="text-accent" aria-hidden="true" /> Education
           </h3>
+          <p className="text-sm text-muted">
+            KU Leuven is ranked <span className="text-fg">{universityRanking.text}</span> (
+            <a href={universityRanking.url} target="_blank" rel="noopener noreferrer" className="underline decoration-line/30 underline-offset-4 hover:text-fg">
+              {universityRanking.source}
+            </a>
+            ).
+          </p>
           {education.map((e) => (
             <div key={e.degree} className="glass p-6">
-              <p className="font-display text-xl text-fg">{e.degree}</p>
-              <p className="text-accent">{e.school}</p>
+              <p className="font-display text-xl text-fg">
+                <MaybeLink href={e.degreeUrl}>{e.degree}</MaybeLink>
+              </p>
+              {e.subtitle && <p className="text-sm text-fg/80">{e.subtitle}</p>}
+              <p className="mt-1 text-accent">
+                <MaybeLink href={e.schoolUrl}>{e.school}</MaybeLink>
+              </p>
               <p className="mt-1 text-sm text-muted">{e.period}</p>
               {e.detail && <p className="mt-3 text-muted">{e.detail}</p>}
               {e.coursework && (
@@ -471,5 +485,22 @@ export default function App() {
       </footer>
       <AskPortfolio />
     </div>
+  );
+}
+
+// Renders an external link that opens in a new tab, or plain text when there is no URL.
+function MaybeLink({ href, children }: { href?: string; children: ReactNode }) {
+  if (!href) return <>{children}</>;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group/link inline-flex items-baseline gap-1 underline decoration-current/30 underline-offset-4 transition-colors hover:decoration-current"
+    >
+      {children}
+      <ArrowUpRight size={14} className="shrink-0 self-center opacity-60 transition-opacity group-hover/link:opacity-100" aria-hidden="true" />
+      <span className="sr-only">(opens in a new tab)</span>
+    </a>
   );
 }
