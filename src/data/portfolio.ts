@@ -3,7 +3,7 @@
 
 export const profile = {
   name: 'Jamila Musayeva',
-  role: 'Applied AI & Software Engineer',
+  role: 'AI Software Engineer · Forward Deployed & Agentic AI',
   headline: 'Taking GenAI agents from stakeholder discovery to governed production',
   summary:
     'I led 3 enterprise GenAI agents in regulated banking, associated with $1.3M in audited annualized efficiency benefits. Now I build customer-facing products at OPENLANE with an AI-first workflow.',
