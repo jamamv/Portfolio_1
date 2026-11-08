@@ -8,6 +8,7 @@ import TiltCard from './components/TiltCard';
 import SkillCloud from './components/SkillCloud';
 import ParticleField from './components/ParticleField';
 import ErrorBoundary from './components/ErrorBoundary';
+import AskPortfolio from './components/AskPortfolio';
 import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, skillGroups, stats, type Project } from './data/portfolio';
 import { hasWebGL, useFinePointer, useInView, useIsSmallScreen, useReducedMotion } from './hooks/useMotion';
 
@@ -468,6 +469,7 @@ export default function App() {
           <p>Built with React, Three.js, and an AI-first workflow.</p>
         </div>
       </footer>
+      <AskPortfolio />
     </div>
   );
 }
