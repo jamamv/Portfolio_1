@@ -204,7 +204,7 @@ export const education: Education[] = [
     degree: 'Master of Information Management',
     degreeUrl: 'https://onderwijsaanbod.kuleuven.be/opleidingen/e/CQ_50822897.htm',
     subtitle: 'Master of Science',
-    school: 'KU Leuven',
+    school: 'KU Leuven, Faculty of Economics and Business (FEB)',
     schoolUrl: 'https://www.kuleuven.be/english/',
     period: 'Sep 2024 – Jun 2025 · Cum Laude',
     detail: 'Thesis: multi-task deep learning to predict insurance claim frequency and severity.',
