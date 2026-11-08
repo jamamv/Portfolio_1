@@ -172,7 +172,7 @@ export const projects: Project[] = [
   },
 ];
 
-export type Education = { degree: string; school: string; period: string; detail?: string };
+export type Education = { degree: string; school: string; period: string; detail?: string; coursework?: string[] };
 
 export const education: Education[] = [
   {
@@ -180,11 +180,35 @@ export const education: Education[] = [
     school: 'KU Leuven',
     period: 'Sep 2024 – Jun 2025 · Cum Laude',
     detail: 'Thesis: multi-task deep learning to predict insurance claim frequency and severity.',
+    coursework: [
+      'Data Science for Business',
+      'Data Visualization',
+      'AI Ethics & Regulations',
+      'Information Retrieval & Search Engines',
+      'ICT Service Management',
+      'Requirements Engineering & Domain Modelling',
+      'Business Analysis',
+      'Project Management',
+      'Survey Methodology',
+    ],
   },
   {
-    degree: 'BEng Electronics and Software Development',
+    degree: 'BEng Technology: Software Engineering, ICT & Smart Electronics',
     school: 'KU Leuven, Group T Campus',
     period: 'Sep 2020 – Jun 2024',
+    coursework: [
+      'Software Engineering',
+      'Operating Systems',
+      'Computer Architecture',
+      'Communication Networks',
+      'Web Technology',
+      'Data Engineering',
+      'Data Management',
+      'Statistics',
+      'Human-Computer Interaction',
+      'Systems & Control Theory',
+      'Computational Thinking',
+    ],
   },
 ];
 

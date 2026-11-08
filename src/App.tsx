@@ -324,6 +324,18 @@ function Background() {
               <p className="text-accent">{e.school}</p>
               <p className="mt-1 text-sm text-muted">{e.period}</p>
               {e.detail && <p className="mt-3 text-muted">{e.detail}</p>}
+              {e.coursework && (
+                <div className="mt-4">
+                  <p className="mb-2 text-xs uppercase tracking-[0.2em] text-muted/80">Relevant coursework</p>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {e.coursework.map((c) => (
+                      <li key={c} className="rounded-full border border-line/10 px-2.5 py-0.5 text-xs text-muted">
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
         </Reveal>
