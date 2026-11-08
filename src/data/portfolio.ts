@@ -53,11 +53,12 @@ export const skillGroups: SkillGroup[] = [
     items: ['Agent orchestration', 'Multi-agent systems', 'RAG', 'Tool calling', 'MCP', 'Context engineering', 'Knowledge graphs', 'LLM evaluation', 'AI guardrails', 'LangChain', 'LangGraph'],
   },
   {
-    category: 'AI Platforms & Dev Tools',
-    items: ['Claude Code', 'OpenAI Codex', 'AWS Bedrock', 'Azure OpenAI', 'OpenAI API', 'Azure AI Foundry', 'Copilot Studio', 'Power Automate'],
+    category: 'Enterprise AI Platforms',
+    items: ['Copilot Studio', 'Power Automate', 'Microsoft Copilot', 'Azure OpenAI', 'Azure AI Foundry', 'AWS Bedrock', 'Google AI Studio', 'Gemini', 'OpenAI API'],
   },
+  { category: 'AI-Assisted Development', items: ['Claude Code', 'OpenAI Codex', 'ChatGPT'] },
   { category: 'Programming & Full-Stack', items: ['Python', 'TypeScript', 'Java', 'SQL', 'React', '.NET', 'Node.js', 'Spring Boot'] },
-  { category: 'Cloud & Production', items: ['AWS', 'Azure DevOps', 'Docker', 'Jenkins', 'Git', 'CI/CD', 'Distributed tracing', 'Honeycomb'] },
+  { category: 'Cloud & Production', items: ['AWS', 'Azure', 'Azure DevOps', 'Docker', 'Jenkins', 'Git', 'CI/CD', 'Distributed tracing', 'Honeycomb'] },
   { category: 'Databases & APIs', items: ['PostgreSQL', 'Oracle', 'MongoDB', 'REST APIs', 'OpenAPI', 'Swagger'] },
 ];
 
