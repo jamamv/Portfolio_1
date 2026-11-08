@@ -1,512 +1,228 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Menu,
-  X,
-  Home,
-  User,
-  Code,
-  Briefcase,
-  FolderOpen,
-  Mail,
-  Github,
-  Linkedin,
-  Twitter,
-  Download,
-  ExternalLink,
-  MapPin,
-  Phone,
-  Send
-} from 'lucide-react';
+import { Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
+import Navbar from './components/Navbar';
+import Section from './components/Section';
+import { about, experiences, highlights, profile, projects, skillGroups, type Project } from './data/portfolio';
 
-function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+const projectIcons: Record<Project['icon'], typeof Bot> = { bot: Bot, network: Network, search: ScanSearch, graduation: GraduationCap };
 
-  const navigation = [
-    { name: 'Home', href: '#home', icon: Home },
-    { name: 'About', href: '#about', icon: User },
-    { name: 'Skills', href: '#skills', icon: Code },
-    { name: 'Experience', href: '#experience', icon: Briefcase },
-    { name: 'Projects', href: '#projects', icon: FolderOpen },
-    { name: 'Contact', href: '#contact', icon: Mail },
+const tagClass = 'rounded-full bg-emerald-600/15 px-3 py-1 text-sm text-emerald-300';
+
+function Hero() {
+  return (
+    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/25 to-black" aria-hidden="true" />
+      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
+        <p className="mb-4 font-medium uppercase tracking-widest text-emerald-400">{profile.role}</p>
+        <h1 className="mb-6 text-4xl font-bold md:text-6xl">{profile.name}</h1>
+        <p className="mb-4 text-xl text-gray-200 md:text-2xl">{profile.headline}</p>
+        <p className="mx-auto mb-10 max-w-2xl text-gray-400">{profile.summary}</p>
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <a
+            href={profile.resume}
+            download
+            className="flex items-center justify-center rounded-lg bg-emerald-600 px-8 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
+          >
+            <Download className="mr-2" size={20} aria-hidden="true" />
+            Download Resume
+          </a>
+          <a
+            href="#contact"
+            className="rounded-lg border border-emerald-600 px-8 py-3 font-medium text-emerald-400 transition-colors hover:bg-emerald-600 hover:text-white"
+          >
+            Get In Touch
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  return (
+    <Section id="about" title="About Me" className="bg-gray-900">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+        <div className="space-y-5 leading-relaxed text-gray-300 lg:col-span-2">
+          {about.map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
+          ))}
+        </div>
+        <aside className="h-fit space-y-5 rounded-lg bg-gray-800 p-8">
+          <h3 className="text-xl font-bold text-emerald-400">Quick Facts</h3>
+          <div className="flex items-center gap-3 text-gray-300">
+            <Briefcase className="shrink-0 text-emerald-400" size={20} aria-hidden="true" />
+            {profile.currentCompany}
+          </div>
+          <div className="flex items-center gap-3 text-gray-300">
+            <MapPin className="shrink-0 text-emerald-400" size={20} aria-hidden="true" />
+            {profile.location}
+          </div>
+          {highlights.map((h) => (
+            <div key={h.label}>
+              <p className="text-sm text-gray-500">{h.label}</p>
+              <p className="text-gray-200">{h.value}</p>
+            </div>
+          ))}
+        </aside>
+      </div>
+    </Section>
+  );
+}
+
+function Skills() {
+  return (
+    <Section id="skills" title="Skills" subtitle="What I use to design, ship, and run AI systems in production">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {skillGroups.map((group) => (
+          <div key={group.category} className="rounded-lg bg-gray-900 p-6">
+            <h3 className="mb-4 font-semibold text-emerald-400">{group.category}</h3>
+            <ul className="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li key={item} className="rounded bg-gray-800 px-3 py-1 text-sm text-gray-200">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Experience() {
+  return (
+    <Section id="experience" title="Experience" className="bg-gray-900">
+      <ol className="relative space-y-10 border-l-2 border-emerald-600/60 pl-8 md:ml-4">
+        {experiences.map((exp) => (
+          <li key={exp.title + exp.company} className="relative">
+            <span className="absolute -left-[41px] top-2 h-4 w-4 rounded-full border-4 border-gray-900 bg-emerald-500" aria-hidden="true" />
+            <div className="rounded-lg bg-gray-800 p-6">
+              <div className="mb-4 flex flex-col justify-between gap-1 md:flex-row md:items-baseline">
+                <div>
+                  <h3 className="text-xl font-bold text-white">{exp.title}</h3>
+                  <p className="font-semibold text-emerald-400">{exp.company}</p>
+                </div>
+                <p className="text-sm text-gray-400">{exp.period}</p>
+              </div>
+              <ul className="mb-4 list-disc space-y-2 pl-5 text-gray-300 marker:text-emerald-500">
+                {exp.highlights.map((h) => (
+                  <li key={h}>{h}</li>
+                ))}
+              </ul>
+              <ul className="flex flex-wrap gap-2" aria-label="Technologies">
+                {exp.technologies.map((t) => (
+                  <li key={t} className={tagClass}>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Section>
+  );
+}
+
+function Projects() {
+  return (
+    <Section id="projects" title="Selected Projects" subtitle="Highlights from production AI work and my master thesis">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        {projects.map((project) => {
+          const Icon = projectIcons[project.icon];
+          return (
+            <article key={project.title} className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 p-6 transition-colors hover:border-emerald-600/60">
+              <Icon className="mb-4 text-emerald-400" size={32} aria-hidden="true" />
+              <h3 className="mb-3 text-xl font-bold text-white">{project.title}</h3>
+              <p className="mb-6 flex-1 text-gray-300">{project.description}</p>
+              <ul className="mb-4 flex flex-wrap gap-2" aria-label="Technologies">
+                {project.technologies.map((t) => (
+                  <li key={t} className={tagClass}>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              {(project.github || project.live) && (
+                <div className="flex gap-4 border-t border-gray-800 pt-4 text-sm">
+                  {project.github && (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
+                      <Github size={16} aria-hidden="true" /> Code
+                    </a>
+                  )}
+                  {project.live && (
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
+                      <ExternalLink size={16} aria-hidden="true" /> Live
+                    </a>
+                  )}
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}
+
+function Contact() {
+  const links = [
+    { href: `mailto:${profile.email}`, label: profile.email, icon: Mail },
+    ...(profile.phone ? [{ href: `tel:${profile.phone.replace(/\s/g, '')}`, label: profile.phone, icon: Phone }] : []),
+    { href: profile.linkedin, label: 'LinkedIn', icon: Linkedin },
+    { href: profile.github, label: 'GitHub', icon: Github },
   ];
-
-  const skills = [
-    { name: 'Java', level: 95 },
-    { name: 'Python', level: 90 },
-    { name: 'SQL', level: 85 },
-    { name: 'Oracle DB', level: 88 },
-    { name: 'JavaScript', level: 82 },
-    { name: 'AWS', level: 78 },
-  ];
-
-  const experiences = [
-    {
-      title: 'Software Engineer',
-      company: 'KBC Bank & Verzekering',
-      period: '2024 - Present',
-      description: 'Responsible for automating reports at KBC Bank using Java, Python, Oracle, SQL, Git, Jenkins and Bitbucket for version control, integrating with databases and calculation engines. I manage data pipelines, handle incident resolution, and optimize reporting systems in an Agile environment.',
-      technologies: ['Java', 'Python', 'Oracle Database', 'SQL', 'Git', 'Cross-Functional Team Management', 'Agile Project Management', 'Computer Science']
-    },
-    {
-      title: 'Technical Support Engineer',
-      company: 'Luzmo - Saas for BI and Data Analytics',
-      period: '2023 - 2024',
-      description: 'Responsible for troubleshooting AWS logs, resolving front-end/back-end bugs, handling API requests via Postman/Insomnia, and managing SSO integrations. I collaborated with cross-functional teams, dashboarding data visualization, communicated with clients, and maintained technical documentation.',
-      technologies: ['JSON', 'Databases', "REST API's", 'Data Analysis', 'Data Visualization', 'Embedded Software', 'AWS']
-    },
-    {
-      title: 'Data Analyst - Hackathon',
-      company: 'Emergent Leuven',
-      period: '2023 - 2023',
-      description: 'Best Data Visualization Award - Data 4 Good Challenge. Member of a team that developed a data visualization solution to address waste management issues using Data Science and AI, winning the Best Data Visualization award out of 160 participants. The project, judged by representatives from KBC Bank, McKinsey & Company, and Datacamp, demonstrated the power of data-driven decision-making and the clear presentation of complex datasets. We built our model using python as the main programming language.',
-      technologies: ['Data Visualization', 'Data Analysis', 'JSON', 'Data Science']
-    }
-  ];
-
-  const projects = [
-    {
-    title: 'Master Thesis: Multitask Bayesian-Neural Hybrid Framework for Insurance Claims',
-      description: 'Leveraged PyTorch and TensorFlow to build a Bayesian-neural hybrid framework predicting claim frequency and severity. Implemented parametric distribution layers for interpretability and achieved statistically robust performance on sparse datasets',
-      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['Python', 'PyTorch', 'Bayesian Networks', 'Tensorflow'],
-      github: '#',
-      live: '#'
-    },
-    {
-      title: 'Smart Bus System Web App',
-      description: 'Led a team of four to develop a real-time monitoring/control interface (Django, Docker, MongoDB, Celery, JavaScript) for Raspberry Pi/Arduino-based bus obstacle detection and temperature sensing system. Implemented a user-friendly dashboard for data visualization and control, enhancing public transport safety and efficiency.',
-      image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['Python', 'Django', 'Docker', 'MongoDB', 'Celery', 'JavaScript'],
-      github: '#',
-      live: '#'
-    },
-    {
-      title: 'Embedded Systems Networking Project',
-      description: 'Engineered a home-automation gateway on ESP32S3 (FreeRTOS, TCP/IP, SQL, PHP) with multi-threading, mutexes, and crash-consistency measures—ensuring reliable sensor data synchronization.',
-      image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=600',
-      technologies: ['C', 'FreeRTOS', 'TCP/IP', 'SQL', 'PHP'],
-      github: '#',
-      live: '#'
-    }
-  ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = navigation.map(nav => nav.href.slice(1));
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.slice(1));
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm border-b border-gray-800 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="text-2xl font-bold text-emerald-400">
-              Portfolio
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {navigation.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${activeSection === item.href.slice(1)
-                      ? 'bg-emerald-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                      }`}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700"
+    <Section
+      id="contact"
+      title="Get In Touch"
+      subtitle="Open to applied AI and AI-focused software engineering conversations. Email is the fastest way to reach me."
+      className="bg-gray-900"
+    >
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-8">
+        <a
+          href={`mailto:${profile.email}`}
+          className="flex items-center rounded-lg bg-emerald-600 px-8 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
+        >
+          <Mail className="mr-2" size={20} aria-hidden="true" />
+          Email me
+        </a>
+        <ul className="flex flex-wrap justify-center gap-4">
+          {links.map(({ href, label, icon: Icon }) => (
+            <li key={href}>
+              <a
+                href={href}
+                {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
               >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
+                <Icon size={18} aria-hidden="true" />
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Section>
+  );
+}
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-900">
-              {navigation.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors duration-200 ${activeSection === item.href.slice(1)
-                    ? 'bg-emerald-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    }`}
-                >
-                  <item.icon className="inline-block w-5 h-5 mr-2" />
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-black"></div>
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="text-white">Hi, I'm </span>
-            <span className="text-emerald-400">Jamila Musayeva</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Software Engineer
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/Jamila_Musayeva_CV.pdf"
-              download
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
-            >
-              <Download className="mr-2" size={20} />
-              Download Resume
-            </a>
-            <button
-              onClick={() => scrollToSection('#contact')}
-              className="border border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
-            >
-              Get In Touch
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Experienced software engineer with 4+ years of hands-on development in modern web technologies.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-emerald-400">Professional Background</h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                I'm a software engineer with over 2 years of experience building high-performance systems using Java and Python.
-              </p>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                I help with building regulated, data-intensive financial platforms. I focus on Java & Python services, ETL pipelines, and REST APIs that ingest, validate, and reconcile millions of IFRS 9 / ECB-governed records, while keeping releases fast and defects low.
-                Earlier in my career I spent time in a technical support role—translating production issues and data nuances into clear language for non-technical users and helping them debug issues. That experience still shapes how I design runbooks, alerts, and onboarding flows: I aim to reduce time-to-resolution and make complex data behavior explainable.
-                Alongside engineering I completed substantial management and operations coursework (strategic IP management, ICT service management, requirement engineering and domain modeling), which helps me structure delivery plans, define measurable KPIs, and facilitate cross-team decisions.
-                Outside my full-time roles I’m a co-founder of a second-hand retail shop in Azerbaijan, handling the tech stack, inventory analytics, and basic financial dashboards. During the war I helped co-found a volunteer initiative that raised funds and directed all proceeds to affected families—coordinating online campaigns, payment tracing, and transparent reporting.
-                I enjoy the intersection of data engineering, regulatory automation, and platform reliability—where careful schema design, validation logic, and deployment automation directly influence audit outcomes and user trust. I bring a bias for grounded metrics (latency, MTTR, defect escape %, adoption), empathetic communication from my support background, and continuous learning across distributed data patterns and emerging DevOps tooling.
-                Recognition: Winner – Data4Good data visualization challenge (for an analytics project turning complex humanitarian data into actionable insights).
-              </p>
-              <div className="flex space-x-4">
-                <a
-                  href="https://www.linkedin.com/in/jamilamusayeva/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-emerald-400 hover:text-emerald-300 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={24} />
-                </a>
-              </div>
-            </div>
-            <div className="bg-gray-800 p-8 rounded-lg">
-              <h3 className="text-xl font-bold mb-6 text-emerald-400">Quick Facts</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <MapPin className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">USA</span>
-                </div>
-                <div className="flex items-center">
-                  <Mail className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">musayevajama@gmail.com</span>
-                </div>
-                <div className="flex items-center">
-                  <Code className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">2+ Years Experience</span>
-                </div>
-                <div className="flex items-center">
-                  <Briefcase className="text-emerald-400 mr-3" size={20} />
-                  <span className="text-gray-300">KBC Banking & Insurance</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Skills & Expertise</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Technologies and tools I use to bring ideas to life
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {skills.map((skill, index) => (
-              <div key={index} className="bg-gray-900 p-6 rounded-lg">
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-lg font-semibold text-white">{skill.name}</h3>
-                  <span className="text-emerald-400 font-bold">{skill.level}%</span>
-                </div>
-                <div className="w-full bg-gray-700 rounded-full h-3">
-                  <div
-                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 h-3 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold mb-8 text-center text-emerald-400">Technologies I Work With</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {['React', 'Vue.js', 'Node.js', 'Python', 'TypeScript', 'MongoDB', 'PostgreSQL', 'AWS', 'Docker', 'Git', 'Figma', 'Tailwind'].map((tech, index) => (
-                <div key={index} className="bg-gray-800 p-4 rounded-lg text-center hover:bg-gray-700 transition-colors duration-200">
-                  <span className="text-gray-300 font-medium">{tech}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Work Experience</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              My professional journey and key achievements
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-emerald-600"></div>
-
-            {experiences.map((exp, index) => (
-              <div key={index} className={`relative flex items-center mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-emerald-600 rounded-full border-4 border-gray-900"></div>
-
-                <div className={`bg-gray-800 p-6 rounded-lg ml-12 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:mr-auto md:ml-0' : 'md:ml-auto md:mr-0'}`}>
-                  <div className="mb-4">
-                    <h3 className="text-xl font-bold text-white">{exp.title}</h3>
-                    <p className="text-emerald-400 font-semibold">{exp.company}</p>
-                    <p className="text-gray-400 text-sm">{exp.period}</p>
-                  </div>
-                  <p className="text-gray-300 mb-4">{exp.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="bg-emerald-600/20 text-emerald-400 px-3 py-1 rounded-full text-sm">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              A showcase of my recent work and personal projects
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="bg-gray-900 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
-                <div className="relative group">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="flex space-x-4">
-                      <a href={project.github} className="bg-emerald-600 p-2 rounded-full hover:bg-emerald-700 transition-colors">
-                        <Github size={20} />
-                      </a>
-                      <a href={project.live} className="bg-emerald-600 p-2 rounded-full hover:bg-emerald-700 transition-colors">
-                        <ExternalLink size={20} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-white">{project.title}</h3>
-                  <p className="text-gray-300 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded text-sm">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Ready to work together? Let's discuss your next project
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-emerald-400">Let's Connect</h3>
-              <p className="text-gray-300 mb-8">
-                I'm always interested in hearing about new opportunities and exciting projects.
-                Whether you have a question or just want to say hi, feel free to reach out!
-              </p>
-
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <Mail className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">musayevajama@gmail.com</span>
-                </div>
-                <div className="flex items-center">
-                  <Phone className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">+1 571 241 4561</span>
-                </div>
-                <div className="flex items-center">
-                  <MapPin className="text-emerald-400 mr-4" size={24} />
-                  <span className="text-gray-300">USA</span>
-                </div>
-              </div>
-
-              <div className="flex space-x-4 mt-8">
-                <a
-                  href="https://www.linkedin.com/in/jamilamusayeva/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-800 p-3 rounded-lg hover:bg-emerald-600 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={24} />
-                </a>
-              </div>
-            </div>
-
-            <div className="bg-gray-800 p-8 rounded-lg">
-              <form className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white"
-                    placeholder="Your Name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-white"
-                    placeholder="Tell me about your project..."
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
-                >
-                  <Send className="mr-2" size={20} />
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black py-8 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-gray-400">
-              © 2025 Jamila Musayeva. Built with React & Tailwind CSS.
-            </p>
-          </div>
-        </div>
+export default function App() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
+      </main>
+      <footer className="border-t border-gray-800 bg-black py-8 text-center text-gray-400">
+        <p>
+          © {new Date().getFullYear()} {profile.name}
+        </p>
       </footer>
     </div>
   );
 }
-
-export default App;
