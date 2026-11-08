@@ -20,6 +20,8 @@ import {
   recognition,
   skillGroups,
   stats,
+  recommendationsUrl,
+  testimonials,
 } from '../data/portfolio';
 
 export type Link = { label: string; href: string };
@@ -276,6 +278,14 @@ const topics: Topic[] = [
     }),
   },
   {
+    terms: ['recommendation', 'recommend', 'testimonial', 'reference', 'references', 'colleagues say', 'people say', 'manager say', 'feedback', 'work with you like', 'like to work with'],
+    answer: () => ({
+      text: `Here's what people I've worked with wrote in LinkedIn recommendations:`,
+      bullets: testimonials.map((t) => `"${t.quote}" (${t.name}, ${t.role})`),
+      links: [{ label: 'All recommendations', href: recommendationsUrl }],
+    }),
+  },
+  {
     terms: ['write', 'writing', 'blog', 'post', 'article', 'linkedin', 'opinion', 'think about', 'view on'],
     answer: () => ({
       text: `I write on LinkedIn about shipping AI that has to be trusted. A few lines:`,
@@ -331,6 +341,7 @@ const docs: Doc[] = [
   ...recognition.map((r) => ({ title: r.title, text: r.detail })),
   ...posts.map((p) => ({ title: 'From my writing', text: `${p.quote} ${p.summary}` })),
   ...about.map((a) => ({ title: 'About me', text: a })),
+  ...testimonials.map((t) => ({ title: `Recommendation from ${t.name}`, text: t.quote })),
 ];
 
 const docTokens = docs.map((d) => new Set(tokens(`${d.title} ${d.text}`)));
