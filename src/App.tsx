@@ -55,7 +55,7 @@ function Hero() {
             <p className="mb-10 max-w-xl leading-relaxed text-muted">{profile.summary}</p>
           </Reveal>
           <Reveal delay={240} className="flex flex-col gap-3 sm:flex-row">
-            <a href={profile.resume} download className="btn-primary">
+            <a href={profile.resume} download="Jamila_Musayeva_CV.pdf" className="btn-primary">
               <Download size={18} aria-hidden="true" />
               Download resume
             </a>
