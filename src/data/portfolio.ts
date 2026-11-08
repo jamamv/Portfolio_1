@@ -40,9 +40,9 @@ export const about = [
 export const highlights = [
   { label: 'Experience', value: '3.5+ years' },
   { label: 'Impact', value: '$1.3M audited annual benefits from GenAI agents' },
-  { label: 'Education', value: 'MSc Information Management, KU Leuven (Cum Laude)' },
-  { label: 'Recognition', value: 'Panel speaker, AI/GenAI event at Google Brussels' },
-  { label: 'Languages', value: 'English, Russian, Azerbaijani' },
+  { label: 'Education', value: 'MSc Information Management (Cum Laude) and BEng, KU Leuven' },
+  { label: 'Recognition', value: 'Speaker at The Edge 2026, Google Brussels' },
+  { label: 'Languages', value: 'English, Russian, Azerbaijani (native) · Dutch, French, Turkish (working)' },
 ];
 
 export type SkillGroup = { category: string; items: string[] };
@@ -94,6 +94,17 @@ export const experiences: Experience[] = [
       'Led delivery across DEV/ACC/PROD, lowered inference costs ~30% through model selection and token optimization, and mentored 2 engineers.',
     ],
     technologies: ['Python', 'AWS Bedrock', 'Azure OpenAI', 'RAG', 'Copilot Studio', 'Power Automate', 'GitHub CI/CD'],
+  },
+  {
+    title: 'AI Benchmark Engineer (Freelance)',
+    company: 'Alignerr',
+    period: 'Feb 2025 – Present',
+    highlights: [
+      'Train and evaluate frontier LLMs with rubric-based ratings for factuality, completeness, and coherence.',
+      'Provide human-in-the-loop feedback, prompt evaluation, and data annotation for generative AI model tasks.',
+      'Hold labeled outputs to strict guidelines and reliability metrics such as benchmark consistency and minimal rework.',
+    ],
+    technologies: ['LLM evaluation', 'Rubric design', 'Human-in-the-loop', 'Data annotation'],
   },
   {
     title: 'Software Engineer',
@@ -158,5 +169,106 @@ export const projects: Project[] = [
       'Master thesis at KU Leuven. A multitask framework in PyTorch and TensorFlow predicting claim frequency and severity, with parametric distribution layers for interpretability on sparse data.',
     technologies: ['Python', 'PyTorch', 'TensorFlow', 'Bayesian modeling'],
     icon: 'graduation',
+  },
+];
+
+export type Education = { degree: string; school: string; period: string; detail?: string };
+
+export const education: Education[] = [
+  {
+    degree: 'MSc Information Management: Software Engineering',
+    school: 'KU Leuven',
+    period: 'Sep 2024 – Jun 2025 · Cum Laude',
+    detail: 'Thesis: multi-task deep learning to predict insurance claim frequency and severity.',
+  },
+  {
+    degree: 'BEng Electronics and Software Development',
+    school: 'KU Leuven, Group T Campus',
+    period: 'Sep 2020 – Jun 2024',
+  },
+];
+
+export type Recognition = { title: string; detail: string; year: string };
+
+export const recognition: Recognition[] = [
+  {
+    title: 'Speaker, The Edge 2026 at Google Brussels',
+    detail: 'Spoke on human-AI collaboration in enterprise at a sold-out GDG KU Leuven event.',
+    year: '2026',
+  },
+  {
+    title: 'Best Data Visualization, Data 4 Good Challenge',
+    detail: 'Won among 160 participants with a waste-management data solution, judged by McKinsey, KBC, and DataCamp.',
+    year: '2023',
+  },
+];
+
+// AI community events, shown as a compact list.
+export const community = [
+  'North East AI Agents Day at Jane Street (NYC AI Week)',
+  'Miami AI Build Night with Google DeepMind',
+  'AI & Business Scaling Summit NYC',
+  'LLM Knowledge Bases & AI Memory, The AI Alliance (IBM)',
+  'Women in AI Benelux',
+];
+
+export type Post = { quote: string; summary: string; url: string };
+
+// Short excerpts from LinkedIn posts, linking to the full post.
+export const posts: Post[] = [
+  {
+    quote: 'Shipping an AI agent takes a weekend. Shipping one inside a regulated institution takes months.',
+    summary: 'Why the gap between demo and production is regulatory and human, not technical.',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7447276812180537344/',
+  },
+  {
+    quote: "You don't have a model problem. You have a data debt problem.",
+    summary: 'Clean data, solid architecture, and sensible retrieval come before model choice.',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7441512403458101248/',
+  },
+  {
+    quote: 'The hard part of agents is shifting from "can the model reason?" to "can the system survive reality?"',
+    summary: 'Takeaways from North East AI Agents Day at Jane Street on reliability and silent failure.',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7459628014385913856/',
+  },
+  {
+    quote: "A model that tells you when it's not the right tool is one you'll keep coming back to.",
+    summary: 'Miami AI Build Night with Google DeepMind, and why knowledge graphs beat long context for code.',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7524327515490889728/',
+  },
+];
+
+export type SideProject = { title: string; description: string; technologies: string[] };
+
+// University and earlier engineering projects, shown as a compact list under the featured projects.
+export const earlierProjects: SideProject[] = [
+  {
+    title: 'Smart Bus System',
+    description:
+      'Led a team of 4 building an automated bus control system: Raspberry Pi and Arduino sensors for obstacle detection and temperature, plus a real-time web app for monitoring and route management.',
+    technologies: ['Python', 'Django', 'MongoDB', 'Celery', 'Docker', 'IoT'],
+  },
+  {
+    title: 'Embedded Home Automation Gateway',
+    description:
+      'A home automation master node and sensor gateway on ESP32-S3, with thread-safe FreeRTOS tasks, a TCP server syncing sensor data to SQL, crash consistency, and detailed logging.',
+    technologies: ['C/C++', 'ESP32-S3', 'FreeRTOS', 'TCP/IP', 'SQL'],
+  },
+  {
+    title: 'FPGA Hexadecimal Editor',
+    description:
+      'A hex editor on the PYNQ-Z1 board with sub-5 ns read/write latency through pipelining, plus parity and checksum error detection.',
+    technologies: ['VHDL', 'Vivado', 'FPGA'],
+  },
+  {
+    title: 'Process Optimization Dashboards',
+    description:
+      'Led a team of 5 on Celonis process mining across manufacturing sites to find supply-chain bottlenecks, with automated ERP data pipelines and live Tableau dashboards.',
+    technologies: ['Celonis', 'Python', 'SQL', 'Tableau'],
+  },
+  {
+    title: 'Resource Allocation Platform',
+    description: 'A Google Cloud platform for server capacity planning whose automated pipelines improved resource efficiency by 30%.',
+    technologies: ['Python', 'SQL', 'Google Cloud', 'Tableau'],
   },
 ];

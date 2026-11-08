@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Award, Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
 import Reveal from './components/Reveal';
@@ -8,7 +8,7 @@ import TiltCard from './components/TiltCard';
 import SkillCloud from './components/SkillCloud';
 import ParticleField from './components/ParticleField';
 import ErrorBoundary from './components/ErrorBoundary';
-import { about, experiences, highlights, profile, projects, skillGroups, stats, type Project } from './data/portfolio';
+import { about, community, earlierProjects, education, experiences, highlights, posts, profile, projects, recognition, skillGroups, stats, type Project } from './data/portfolio';
 import { hasWebGL, useFinePointer, useInView, useIsSmallScreen, useReducedMotion } from './hooks/useMotion';
 
 // 3D code loads after the page text, in its own chunk.
@@ -291,6 +291,95 @@ function Projects() {
           <ProjectCard key={project.title} project={project} index={i} />
         ))}
       </div>
+
+      <Reveal className="mt-16 scroll-mt-20">
+        <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.2em] text-muted">Earlier engineering projects</h3>
+        <ul className="divide-y divide-line/10 border-y border-line/10">
+          {earlierProjects.map((p) => (
+            <li key={p.title} className="grid gap-3 py-6 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-8">
+              <p className="font-display text-xl text-fg">{p.title}</p>
+              <div>
+                <p className="mb-3 text-muted">{p.description}</p>
+                <p className="text-sm text-accent/90">{p.technologies.join(' · ')}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </Section>
+  );
+}
+
+function Background() {
+  return (
+    <Section id="background" index="05" title="Background" subtitle="Education, recognition, and the AI community.">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Reveal className="space-y-4">
+          <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-muted">
+            <GraduationCap size={18} className="text-accent" aria-hidden="true" /> Education
+          </h3>
+          {education.map((e) => (
+            <div key={e.degree} className="glass p-6">
+              <p className="font-display text-xl text-fg">{e.degree}</p>
+              <p className="text-accent">{e.school}</p>
+              <p className="mt-1 text-sm text-muted">{e.period}</p>
+              {e.detail && <p className="mt-3 text-muted">{e.detail}</p>}
+            </div>
+          ))}
+        </Reveal>
+        <Reveal delay={100} className="space-y-4">
+          <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-muted">
+            <Award size={18} className="text-accent" aria-hidden="true" /> Recognition
+          </h3>
+          {recognition.map((r) => (
+            <div key={r.title} className="glass p-6">
+              <div className="flex items-baseline justify-between gap-4">
+                <p className="font-display text-xl text-fg">{r.title}</p>
+                <p className="shrink-0 text-sm text-muted">{r.year}</p>
+              </div>
+              <p className="mt-2 text-muted">{r.detail}</p>
+            </div>
+          ))}
+          <div className="glass p-6">
+            <p className="mb-3 text-sm font-semibold text-fg">AI community</p>
+            <ul className="flex flex-wrap gap-2">
+              {community.map((c) => (
+                <li key={c} className="rounded-full border border-line/10 px-3 py-1 text-sm text-muted">
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+function Writing() {
+  return (
+    <Section id="writing" index="06" title="Writing" subtitle="Notes on shipping AI that has to be trusted.">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {posts.map((p, i) => (
+          <Reveal key={p.url} delay={(i % 2) * 100}>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass group flex h-full flex-col p-6 transition-colors hover:border-accent/40 md:p-8"
+            >
+              <span className="mb-4 font-display text-5xl leading-none text-accent/60" aria-hidden="true">
+                “
+              </span>
+              <blockquote className="mb-4 flex-1 font-display text-2xl italic leading-snug text-fg">{p.quote}</blockquote>
+              <p className="mb-6 text-muted">{p.summary}</p>
+              <span className="inline-flex items-center gap-1 text-sm text-accent">
+                Read on LinkedIn <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+              </span>
+            </a>
+          </Reveal>
+        ))}
+      </div>
     </Section>
   );
 }
@@ -311,7 +400,7 @@ function Contact() {
           <div className="relative rounded-[calc(2rem-1px)] bg-surface px-6 py-16 text-center md:px-16 md:py-24">
             <div className="absolute inset-0 grain opacity-60" aria-hidden="true" />
             <p className="eyebrow relative mb-5">
-              <span className="text-muted">05 /</span> Contact
+              <span className="text-muted">07 /</span> Contact
             </p>
             <h2 id="contact-title" className="relative mx-auto mb-6 max-w-3xl font-display text-4xl leading-tight md:text-6xl">
               Let's build AI that <span className="italic text-accent">ships</span>.
@@ -355,6 +444,8 @@ export default function App() {
         <Skills />
         <Experience />
         <Projects />
+        <Background />
+        <Writing />
         <Contact />
       </main>
       <footer className="relative z-10 border-t border-line/10 py-10">
