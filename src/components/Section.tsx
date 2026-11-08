@@ -1,23 +1,27 @@
 import type { ReactNode } from 'react';
+import Reveal from './Reveal';
 
 type SectionProps = {
   id: string;
+  index: string;
   title: string;
   subtitle?: string;
   className?: string;
   children: ReactNode;
 };
 
-export default function Section({ id, title, subtitle, className = '', children }: SectionProps) {
+export default function Section({ id, index, title, subtitle, className = '', children }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={`scroll-mt-16 py-20 ${className}`}>
+    <section id={id} aria-labelledby={`${id}-title`} className={`relative scroll-mt-16 py-24 md:py-32 ${className}`}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-12 text-center">
-          <h2 id={`${id}-title`} className="mb-3 text-3xl font-bold md:text-4xl">
-            {title}
+        <Reveal as="div" className="mb-14 max-w-3xl">
+          <p className="eyebrow mb-4">
+            <span className="text-muted">{index} /</span> {title}
+          </p>
+          <h2 id={`${id}-title`} className="font-display text-4xl leading-tight md:text-5xl">
+            {subtitle ?? title}
           </h2>
-          {subtitle && <p className="mx-auto max-w-2xl text-gray-400">{subtitle}</p>}
-        </header>
+        </Reveal>
         {children}
       </div>
     </section>

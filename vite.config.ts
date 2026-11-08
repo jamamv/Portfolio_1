@@ -7,4 +7,8 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    // The Three.js chunk is large but lazy-loaded after the page text renders.
+    chunkSizeWarningLimit: 900,
+  },
 });

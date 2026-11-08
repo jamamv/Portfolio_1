@@ -16,7 +16,20 @@ export const profile = {
   // The PDF lives in /public under this exact name.
   resume: '/Jamila_Musayeva_CV.pdf',
   currentCompany: 'OPENLANE',
+  // Portrait and navbar avatar, both in /public. Replace the files to change the photo.
+  photo: '/jamila.webp',
+  avatar: '/jamila-avatar.webp',
 };
+
+// Animated counters under the hero headline.
+export type Stat = { value: number; decimals?: number; prefix?: string; suffix?: string; label: string };
+
+export const stats: Stat[] = [
+  { value: 1.3, decimals: 1, prefix: '$', suffix: 'M', label: 'audited annual benefits from GenAI agents' },
+  { value: 12000, suffix: '+', label: 'employees with access to agents I led' },
+  { value: 3, label: 'production GenAI agents as tech lead' },
+  { value: 15, label: 'repositories in my AI knowledge graph' },
+];
 
 export const about = [
   "I'm an applied AI and software engineer who takes generative AI from a stakeholder conversation to a governed production system. Most of my career has been in places where correctness matters: regulatory reporting and enterprise AI at KBC Group, and now customer-facing products at OPENLANE.",

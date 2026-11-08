@@ -1,68 +1,152 @@
-import { Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowUpRight, Bot, Briefcase, Download, ExternalLink, Github, GraduationCap, Linkedin, Mail, MapPin, Network, Phone, ScanSearch } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Section from './components/Section';
-import { about, experiences, highlights, profile, projects, skillGroups, type Project } from './data/portfolio';
+import Reveal from './components/Reveal';
+import StatCounter from './components/StatCounter';
+import TiltCard from './components/TiltCard';
+import SkillCloud from './components/SkillCloud';
+import ParticleField from './components/ParticleField';
+import ErrorBoundary from './components/ErrorBoundary';
+import { about, experiences, highlights, profile, projects, skillGroups, stats, type Project } from './data/portfolio';
+import { hasWebGL, useFinePointer, useInView, useIsSmallScreen, useReducedMotion } from './hooks/useMotion';
+
+// 3D code loads after the page text, in its own chunk.
+const HeroGlobe = lazy(() => import('./components/three/HeroGlobe'));
+const ProjectShape = lazy(() => import('./components/three/ProjectShape'));
 
 const projectIcons: Record<Project['icon'], typeof Bot> = { bot: Bot, network: Network, search: ScanSearch, graduation: GraduationCap };
 
-const tagClass = 'rounded-full bg-emerald-600/15 px-3 py-1 text-sm text-emerald-300';
+function useWebGL() {
+  const [ok, setOk] = useState(false);
+  useEffect(() => setOk(hasWebGL()), []);
+  return ok;
+}
 
 function Hero() {
+  const webgl = useWebGL();
+  const reduced = useReducedMotion();
+  const fine = useFinePointer();
+  const small = useIsSmallScreen();
+  const [globeRef, globeVisible] = useInView<HTMLDivElement>();
+
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/25 to-black" aria-hidden="true" />
-      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
-        <p className="mb-4 font-medium uppercase tracking-widest text-emerald-400">{profile.role}</p>
-        <h1 className="mb-6 text-4xl font-bold md:text-6xl">{profile.name}</h1>
-        <p className="mb-4 text-xl text-gray-200 md:text-2xl">{profile.headline}</p>
-        <p className="mx-auto mb-10 max-w-2xl text-gray-400">{profile.summary}</p>
-        <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href={profile.resume}
-            download
-            className="flex items-center justify-center rounded-lg bg-emerald-600 px-8 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
-          >
-            <Download className="mr-2" size={20} aria-hidden="true" />
-            Download Resume
-          </a>
-          <a
-            href="#contact"
-            className="rounded-lg border border-emerald-600 px-8 py-3 font-medium text-emerald-400 transition-colors hover:bg-emerald-600 hover:text-white"
-          >
-            Get In Touch
-          </a>
+    <section id="home" className="relative overflow-hidden pt-16">
+      <div className="absolute inset-0 grain [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" aria-hidden="true" />
+      <div className="relative mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-6 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:gap-4 lg:px-8">
+        <div className="relative z-10">
+          <Reveal>
+            <p className="mb-8 inline-flex items-center gap-3 rounded-full border border-line/10 bg-surface/60 px-4 py-1.5 text-sm text-muted backdrop-blur">
+              <span className="pulse-dot h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+              Currently at {profile.currentCompany}
+            </p>
+          </Reveal>
+          <Reveal delay={80}>
+            <p className="eyebrow mb-5">{profile.role}</p>
+            <h1 className="mb-6 font-display text-5xl leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+              {profile.name.split(' ')[0]}
+              <br />
+              <span className="italic text-muted">{profile.name.split(' ').slice(1).join(' ')}</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="mb-4 max-w-xl text-xl leading-snug text-fg md:text-2xl">{profile.headline}</p>
+            <p className="mb-10 max-w-xl leading-relaxed text-muted">{profile.summary}</p>
+          </Reveal>
+          <Reveal delay={240} className="flex flex-col gap-3 sm:flex-row">
+            <a href={profile.resume} download className="btn-primary">
+              <Download size={18} aria-hidden="true" />
+              Download resume
+            </a>
+            <a href="#contact" className="btn-ghost">
+              Get in touch
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          </Reveal>
         </div>
+
+        <div ref={globeRef} className="relative h-[320px] sm:h-[420px] lg:h-[600px]">
+          <div className="absolute inset-[15%] rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
+          {webgl && (
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <HeroGlobe animate={!reduced} interactive={fine} light={small} visible={globeVisible} />
+              </Suspense>
+            </ErrorBoundary>
+          )}
+          {fine && webgl && <p className="pointer-events-none absolute bottom-6 right-6 text-xs uppercase tracking-[0.2em] text-muted/70">Drag to explore</p>}
+        </div>
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+        <Reveal className="grid grid-cols-2 gap-8 border-t border-line/10 pt-10 md:grid-cols-4">
+          {stats.map((s) => (
+            <StatCounter key={s.label} stat={s} />
+          ))}
+        </Reveal>
+        <a href="#about" className="mt-12 hidden items-center gap-2 text-sm text-muted transition hover:text-accent md:inline-flex">
+          <ArrowDown size={16} aria-hidden="true" /> Scroll
+        </a>
       </div>
     </section>
   );
 }
 
+function Portrait() {
+  return (
+    <TiltCard max={4} className="group mx-auto w-full max-w-sm rounded-[2rem] lg:sticky lg:top-24">
+      <div className="absolute -inset-px rounded-[2rem] bg-gradient-to-b from-accent/60 via-line/10 to-transparent" aria-hidden="true" />
+      <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-accent/10 opacity-60 blur-3xl transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
+      <div className="relative overflow-hidden rounded-[2rem] bg-ink">
+        <img
+          src={profile.photo}
+          alt={`Portrait of ${profile.name}`}
+          width={720}
+          height={940}
+          loading="lazy"
+          className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink via-ink/70 to-transparent p-6 pt-20">
+          <p className="font-display text-xl">{profile.name}</p>
+          <p className="text-sm text-muted">{profile.role}</p>
+        </div>
+      </div>
+    </TiltCard>
+  );
+}
+
 function About() {
   return (
-    <Section id="about" title="About Me" className="bg-gray-900">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-        <div className="space-y-5 leading-relaxed text-gray-300 lg:col-span-2">
-          {about.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
-        <aside className="h-fit space-y-5 rounded-lg bg-gray-800 p-8">
-          <h3 className="text-xl font-bold text-emerald-400">Quick Facts</h3>
-          <div className="flex items-center gap-3 text-gray-300">
-            <Briefcase className="shrink-0 text-emerald-400" size={20} aria-hidden="true" />
-            {profile.currentCompany}
+    <Section id="about" index="01" title="About" subtitle="Generative AI, from the first stakeholder conversation to governed production.">
+      <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <Reveal>
+          <Portrait />
+        </Reveal>
+        <div>
+          <div className="space-y-6 text-lg leading-relaxed text-muted">
+            {about.map((paragraph, i) => (
+              <Reveal key={i} delay={i * 60}>
+                <p className={i === 0 ? 'text-fg' : ''}>{paragraph}</p>
+              </Reveal>
+            ))}
           </div>
-          <div className="flex items-center gap-3 text-gray-300">
-            <MapPin className="shrink-0 text-emerald-400" size={20} aria-hidden="true" />
-            {profile.location}
-          </div>
-          {highlights.map((h) => (
-            <div key={h.label}>
-              <p className="text-sm text-gray-500">{h.label}</p>
-              <p className="text-gray-200">{h.value}</p>
+          <Reveal className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="glass flex items-center gap-3 p-5">
+              <Briefcase className="shrink-0 text-accent" size={20} aria-hidden="true" />
+              <span>{profile.currentCompany}</span>
             </div>
-          ))}
-        </aside>
+            <div className="glass flex items-center gap-3 p-5">
+              <MapPin className="shrink-0 text-accent" size={20} aria-hidden="true" />
+              <span>{profile.location}</span>
+            </div>
+            {highlights.map((h) => (
+              <div key={h.label} className="glass p-5">
+                <p className="mb-1 text-xs uppercase tracking-[0.2em] text-muted">{h.label}</p>
+                <p className="text-fg">{h.value}</p>
+              </div>
+            ))}
+          </Reveal>
+        </div>
       </div>
     </Section>
   );
@@ -70,95 +154,142 @@ function About() {
 
 function Skills() {
   return (
-    <Section id="skills" title="Skills" subtitle="What I use to design, ship, and run AI systems in production">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {skillGroups.map((group) => (
-          <div key={group.category} className="rounded-lg bg-gray-900 p-6">
-            <h3 className="mb-4 font-semibold text-emerald-400">{group.category}</h3>
-            <ul className="flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <li key={item} className="rounded bg-gray-800 px-3 py-1 text-sm text-gray-200">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <Section id="skills" index="02" title="Skills" subtitle="What I use to design, ship, and run AI systems in production.">
+      <SkillCloud groups={skillGroups} />
     </Section>
   );
 }
 
+function useScrollProgress<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const p = (window.innerHeight * 0.6 - r.top) / r.height;
+      setProgress(Math.max(0, Math.min(1, p)));
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+  return [ref, progress] as const;
+}
+
 function Experience() {
+  const [listRef, progress] = useScrollProgress<HTMLOListElement>();
+
   return (
-    <Section id="experience" title="Experience" className="bg-gray-900">
-      <ol className="relative space-y-10 border-l-2 border-emerald-600/60 pl-8 md:ml-4">
+    <Section id="experience" index="03" title="Experience" subtitle="From regulatory reporting pipelines to enterprise AI agents.">
+      <ol ref={listRef} className="relative space-y-10 pl-8 md:ml-4 md:pl-12">
+        <span className="absolute left-0 top-2 h-[calc(100%-1rem)] w-px bg-line/10" aria-hidden="true" />
+        <span
+          className="absolute left-0 top-2 w-px bg-gradient-to-b from-accent to-accent/40 shadow-[0_0_12px_rgb(var(--c-accent))]"
+          style={{ height: `calc(${progress * 100}% - ${progress}rem)` }}
+          aria-hidden="true"
+        />
         {experiences.map((exp) => (
-          <li key={exp.title + exp.company} className="relative">
-            <span className="absolute -left-[41px] top-2 h-4 w-4 rounded-full border-4 border-gray-900 bg-emerald-500" aria-hidden="true" />
-            <div className="rounded-lg bg-gray-800 p-6">
-              <div className="mb-4 flex flex-col justify-between gap-1 md:flex-row md:items-baseline">
+          <Reveal as="li" key={exp.title + exp.company} className="relative">
+            <span
+              className="absolute -left-[37px] top-7 h-3 w-3 rounded-full border-2 border-accent bg-ink md:-left-[53px]"
+              aria-hidden="true"
+            />
+            <div className="glass p-6 transition-colors hover:border-line/20 md:p-8">
+              <div className="mb-5 flex flex-col justify-between gap-2 md:flex-row md:items-baseline">
                 <div>
-                  <h3 className="text-xl font-bold text-white">{exp.title}</h3>
-                  <p className="font-semibold text-emerald-400">{exp.company}</p>
+                  <h3 className="font-display text-2xl text-fg">{exp.title}</h3>
+                  <p className="font-medium text-accent">{exp.company}</p>
                 </div>
-                <p className="text-sm text-gray-400">{exp.period}</p>
+                <p className="shrink-0 text-sm text-muted">{exp.period}</p>
               </div>
-              <ul className="mb-4 list-disc space-y-2 pl-5 text-gray-300 marker:text-emerald-500">
+              <ul className="mb-6 space-y-3 text-muted">
                 {exp.highlights.map((h) => (
-                  <li key={h}>{h}</li>
+                  <li key={h} className="flex gap-3">
+                    <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                    <span>{h}</span>
+                  </li>
                 ))}
               </ul>
               <ul className="flex flex-wrap gap-2" aria-label="Technologies">
                 {exp.technologies.map((t) => (
-                  <li key={t} className={tagClass}>
+                  <li key={t} className="tag">
                     {t}
                   </li>
                 ))}
               </ul>
             </div>
-          </li>
+          </Reveal>
         ))}
       </ol>
     </Section>
   );
 }
 
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const [ref, inView] = useInView<HTMLDivElement>({ rootMargin: '100px' });
+  const webgl = useWebGL();
+  const reduced = useReducedMotion();
+  const Icon = projectIcons[project.icon];
+
+  return (
+    <Reveal delay={(index % 2) * 100}>
+      <TiltCard onHoverChange={setHovered} className="glass flex h-full flex-col overflow-hidden p-6 hover:border-accent/40 md:p-8">
+        <div ref={ref} className="relative -mx-2 -mt-2 mb-4 flex h-32 items-center justify-between">
+          <span className="font-display text-5xl text-line/10">0{index + 1}</span>
+          <div className="h-32 w-32">
+            {webgl && inView ? (
+              <ErrorBoundary fallback={<Icon className="m-auto mt-10 text-accent" size={40} aria-hidden="true" />}>
+                <Suspense fallback={null}>
+                  <ProjectShape kind={project.icon} hovered={hovered} animate={!reduced} />
+                </Suspense>
+              </ErrorBoundary>
+            ) : (
+              !webgl && <Icon className="m-auto mt-10 text-accent" size={40} aria-hidden="true" />
+            )}
+          </div>
+        </div>
+        <h3 className="mb-3 font-display text-2xl text-fg">{project.title}</h3>
+        <p className="mb-6 flex-1 leading-relaxed text-muted">{project.description}</p>
+        <ul className="flex flex-wrap gap-2" aria-label="Technologies">
+          {project.technologies.map((t) => (
+            <li key={t} className="tag">
+              {t}
+            </li>
+          ))}
+        </ul>
+        {(project.github || project.live) && (
+          <div className="mt-6 flex gap-4 border-t border-line/10 pt-4 text-sm">
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-accent hover:text-fg">
+                <Github size={16} aria-hidden="true" /> Code
+              </a>
+            )}
+            {project.live && (
+              <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-accent hover:text-fg">
+                <ExternalLink size={16} aria-hidden="true" /> Live
+              </a>
+            )}
+          </div>
+        )}
+      </TiltCard>
+    </Reveal>
+  );
+}
+
 function Projects() {
   return (
-    <Section id="projects" title="Selected Projects" subtitle="Highlights from production AI work and my master thesis">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        {projects.map((project) => {
-          const Icon = projectIcons[project.icon];
-          return (
-            <article key={project.title} className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 p-6 transition-colors hover:border-emerald-600/60">
-              <Icon className="mb-4 text-emerald-400" size={32} aria-hidden="true" />
-              <h3 className="mb-3 text-xl font-bold text-white">{project.title}</h3>
-              <p className="mb-6 flex-1 text-gray-300">{project.description}</p>
-              <ul className="mb-4 flex flex-wrap gap-2" aria-label="Technologies">
-                {project.technologies.map((t) => (
-                  <li key={t} className={tagClass}>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-              {(project.github || project.live) && (
-                <div className="flex gap-4 border-t border-gray-800 pt-4 text-sm">
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
-                      <Github size={16} aria-hidden="true" /> Code
-                    </a>
-                  )}
-                  {project.live && (
-                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300">
-                      <ExternalLink size={16} aria-hidden="true" /> Live
-                    </a>
-                  )}
-                </div>
-              )}
-            </article>
-          );
-        })}
+    <Section id="projects" index="04" title="Projects" subtitle="Highlights from production AI work and my master thesis.">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {projects.map((project, i) => (
+          <ProjectCard key={project.title} project={project} index={i} />
+        ))}
       </div>
     </Section>
   );
@@ -173,44 +304,52 @@ function Contact() {
   ];
 
   return (
-    <Section
-      id="contact"
-      title="Get In Touch"
-      subtitle="Open to applied AI and AI-focused software engineering conversations. Email is the fastest way to reach me."
-      className="bg-gray-900"
-    >
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-8">
-        <a
-          href={`mailto:${profile.email}`}
-          className="flex items-center rounded-lg bg-emerald-600 px-8 py-3 font-medium text-white transition-colors hover:bg-emerald-700"
-        >
-          <Mail className="mr-2" size={20} aria-hidden="true" />
-          Email me
-        </a>
-        <ul className="flex flex-wrap justify-center gap-4">
-          {links.map(({ href, label, icon: Icon }) => (
-            <li key={href}>
-              <a
-                href={href}
-                {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-gray-300 transition-colors hover:bg-gray-700 hover:text-white"
-              >
-                <Icon size={18} aria-hidden="true" />
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
+    <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-16 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="relative overflow-hidden rounded-[2rem] p-px">
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/70 via-line/10 to-accent/20" aria-hidden="true" />
+          <div className="relative rounded-[calc(2rem-1px)] bg-surface px-6 py-16 text-center md:px-16 md:py-24">
+            <div className="absolute inset-0 grain opacity-60" aria-hidden="true" />
+            <p className="eyebrow relative mb-5">
+              <span className="text-muted">05 /</span> Contact
+            </p>
+            <h2 id="contact-title" className="relative mx-auto mb-6 max-w-3xl font-display text-4xl leading-tight md:text-6xl">
+              Let's build AI that <span className="italic text-accent">ships</span>.
+            </h2>
+            <p className="relative mx-auto mb-10 max-w-xl text-muted">
+              Open to applied AI and AI-focused software engineering conversations. Email is the fastest way to reach me.
+            </p>
+            <a href={`mailto:${profile.email}`} className="btn-primary relative">
+              <Mail size={18} aria-hidden="true" />
+              Email me
+            </a>
+            <ul className="relative mt-10 flex flex-wrap justify-center gap-3">
+              {links.map(({ href, label, icon: Icon }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="flex items-center gap-2 rounded-full border border-line/10 px-4 py-2 text-sm text-muted transition hover:border-accent/50 hover:text-fg"
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
       </div>
-    </Section>
+    </section>
   );
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="relative min-h-screen bg-ink text-fg">
+      <ParticleField />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <Skills />
@@ -218,10 +357,13 @@ export default function App() {
         <Projects />
         <Contact />
       </main>
-      <footer className="border-t border-gray-800 bg-black py-8 text-center text-gray-400">
-        <p>
-          © {new Date().getFullYear()} {profile.name}
-        </p>
+      <footer className="relative z-10 border-t border-line/10 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 text-sm text-muted sm:flex-row sm:px-6 lg:px-8">
+          <p>
+            © {new Date().getFullYear()} {profile.name}
+          </p>
+          <p>Built with React, Three.js, and an AI-first workflow.</p>
+        </div>
       </footer>
     </div>
   );

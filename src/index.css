@@ -1,3 +1,108 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Theme: monochrome editorial with one emerald accent. Values are RGB channels. */
+:root {
+  --c-ink: 9 9 11;
+  --c-surface: 18 18 21;
+  --c-raised: 26 26 30;
+  --c-line: 255 255 255;
+  --c-fg: 242 239 233;
+  --c-muted: 161 161 170;
+  --c-accent: 52 211 153;
+  --c-accent-strong: 16 185 129;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink font-sans text-fg antialiased;
+  }
+  ::selection {
+    background: rgb(var(--c-accent) / 0.3);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply rounded-2xl border border-line/10 bg-surface/70 backdrop-blur-md;
+  }
+  .tag {
+    @apply rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-medium text-accent;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-fg px-7 py-3 font-medium text-ink transition hover:bg-accent;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line/20 px-7 py-3 font-medium text-fg transition hover:border-accent hover:text-accent;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.25em] text-accent;
+  }
+  .grain {
+    background-image: radial-gradient(rgb(var(--c-line) / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tilt cards: glare follows the pointer through --gx / --gy. */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease-out, border-color 0.3s;
+  transform-style: preserve-3d;
+}
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--glare, 0);
+  transition: opacity 0.3s;
+  background: radial-gradient(400px circle at var(--gx, 50%) var(--gy, 50%), rgb(var(--c-accent) / 0.12), transparent 45%);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--c-accent) / 0.6); }
+  50% { box-shadow: 0 0 0 6px rgb(var(--c-accent) / 0); }
+}
+.pulse-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tilt {
+    transform: none;
+  }
+  .pulse-dot {
+    animation: none;
+  }
+}

@@ -35,19 +35,36 @@ function useActiveSection(ids: string[]) {
 
 const sectionIds = ['home', ...navItems.map((n) => n.id)];
 
+function useScrolled() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return scrolled;
+}
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const active = useActiveSection(sectionIds);
+  const scrolled = useScrolled();
 
   const linkClass = (id: string) =>
-    `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-      active === id ? 'bg-emerald-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+    `rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+      active === id ? 'bg-fg/10 text-accent' : 'text-muted hover:text-fg'
     }`;
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-gray-800 bg-black/90 backdrop-blur-sm">
+    <nav
+      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
+        scrolled || open ? 'border-b border-line/10 bg-ink/75 backdrop-blur-xl' : 'border-b border-transparent'
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#home" className="text-lg font-bold text-emerald-400">
+        <a href="#home" className="flex items-center gap-3 font-display text-lg text-fg">
+          <img src={profile.avatar} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-cover ring-1 ring-accent/50" />
           {profile.name}
         </a>
 
@@ -64,7 +81,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="rounded-md p-2 text-gray-300 hover:bg-gray-800 hover:text-white md:hidden"
+          className="rounded-full p-2 text-muted hover:text-fg md:hidden"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -74,7 +91,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <ul id="mobile-menu" className="space-y-1 border-t border-gray-800 bg-gray-900 px-4 py-3 md:hidden">
+        <ul id="mobile-menu" className="space-y-1 border-t border-line/10 px-4 py-3 md:hidden">
           {navItems.map((item) => (
             <li key={item.id}>
               <a href={`#${item.id}`} onClick={() => setOpen(false)} className={`block ${linkClass(item.id)}`}>
