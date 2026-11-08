@@ -223,7 +223,7 @@ export const education: Education[] = [
   {
     degree: 'Bachelor of Engineering Technology',
     degreeUrl: 'https://onderwijsaanbod.kuleuven.be/opleidingen/e/SC_55554488.htm',
-    subtitle: 'Electronics and ICT Engineering: Smart Electronics and Software',
+    subtitle: 'Bachelor of Science · Electronics and ICT Engineering Technology',
     school: 'KU Leuven, Group T Leuven Campus',
     schoolUrl: 'https://www.kuleuven.be/english/',
     period: 'Sep 2020 – Jun 2024',
