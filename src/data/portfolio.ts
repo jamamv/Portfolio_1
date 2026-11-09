@@ -79,7 +79,7 @@ export const experiences: Experience[] = [
     companyUrl: 'https://www.openlane.com',
     period: 'Aug 2026 – Present',
     highlights: [
-      'Shipped 12+ dealer-facing features and closed 50+ tickets across React/TypeScript and .NET, partnering with Product, UX, Customer Success, and dealers from discovery through post-launch adoption.',
+      'Shipped 20+ dealer-facing features across React/TypeScript and .NET, partnering with the VP of Product, UX, Customer Success, and dealers on requirements, priorities, demos, and production delivery using Claude Code, Codex, custom skills, and automated hooks.',
       'Cut investigation time for customer-reported production failures from 2–3 hours to ~20 minutes by integrating Honeycomb with Codex via MCP to analyze distributed traces.',
       'Architected a team-adopted, AI-queryable knowledge graph across 15 repositories, saving ~2 hours of impact analysis per feature, plus a knowledge-layer agent that answers engineering questions with confidence scores.',
       'Built custom AI skills adopted by Product and Engineering leadership for capability discovery, cross-repo dependency analysis, and turning business requirements into engineering-ready tickets.',
@@ -101,7 +101,7 @@ export const experiences: Experience[] = [
     technologies: ['Python', 'AWS Bedrock', 'Azure OpenAI', 'RAG', 'Copilot Studio', 'Power Automate', 'GitHub CI/CD'],
   },
   {
-    title: 'AI Benchmark Engineer (Freelance)',
+    title: 'AI Evaluation Specialist (Freelance)',
     company: 'Alignerr',
     companyUrl: 'https://www.alignerr.com',
     period: 'Feb 2025 – Present',
@@ -115,7 +115,7 @@ export const experiences: Experience[] = [
     title: 'Software Engineer',
     company: 'KBC Group',
     companyUrl: 'https://www.kbc.com/en',
-    period: 'Sep 2024 – Jul 2025',
+    period: 'Sep 2024 – Aug 2025',
     highlights: [
       'Delivered 17 high-priority features ahead of ECB deadlines: REST APIs, CI/CD pipelines, and dependency-aware regression tests.',
       'Built a nightly ETL pipeline processing ~2M contract records for the migration to a new regulatory reporting platform.',
